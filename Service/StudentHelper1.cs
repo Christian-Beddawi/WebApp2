@@ -49,4 +49,20 @@ public class StudentHelper1 : IStudentHelper
         }
         return students;
     }
+
+    public List<Student> DeleteStudentById(List<Student> students, int sId)
+    {
+        var studentToRemove = students.SingleOrDefault(r => r.id == sId);
+        if (studentToRemove != null)
+            students.Remove(studentToRemove);
+        
+        return students;
+        /*foreach (var s in students)
+        {
+            if (s.id == sId)
+            {
+                students.Remove(s);
+            }
+        }*/
+    }
 }
