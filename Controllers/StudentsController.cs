@@ -62,4 +62,16 @@ public class StudentsController : ControllerBase
     {
         return _helper.UpdateStudentNameById(StudentList, sId, sName);
     }
+    [HttpDelete()]
+    [Route("{id:int}")]
+    public async Task<List<Student>> DeleteStudent([FromRoute] int id)
+    {
+        return _helper.DeleteStudent(StudentList, id);
+    }
+
+    [HttpPost("uploadImage")]
+    public async Task<string> UploadImage([FromForm]IFormFile file)
+    {
+        return _helper.UploadImage(file);
+    }
 }

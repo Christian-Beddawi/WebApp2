@@ -49,4 +49,46 @@ public class StudentHelper1 : IStudentHelper
         }
         return students;
     }
+    
+    public string UploadImage(IFormFile file)
+    {
+        try
+        {
+            // getting file original name
+            string fileName = file.FileName;
+                
+            // combining GUID to create unique name before saving in wwwroot
+            //string uniqueFileName = Guid.NewGuid().ToString() + "_" + fileName;
+            // getting full path inside wwwroot/images
+            string ext=Path.GetExtension(fileName);
+            if (ext != ".png" && ext != ".jpeg" && ext != ".jpg" && ext != ".bmp")
+                return "Invalid File Type!!";
+            
+            var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/", fileName);
+            // copying file
+            file.CopyTo(new FileStream(imagePath, FileMode.Create));
+            return "File Uploaded Successfully!";
+        }
+        catch (Exception ex)
+        {
+            return ex.Message;
+        }
+    }
+    
+    public List<Student> DeleteStudent(List<Student> students, int sId)
+    {
+        var studentToRemove = students.SingleOrDefault(r => r.id == sId);
+        if (studentToRemove != null)
+            students.Remove(studentToRemove);
+        
+        return students;
+        /*foreach (var s in students)
+        {
+            if (s.id == sId)
+            {
+                students.Remove(s);
+            }
+        }*/
+    }
+
 }
