@@ -22,9 +22,10 @@ public class StudentHelper1 : IStudentHelper
     {
         DateTime localDate = DateTime.Now;
         CultureInfo culture = new CultureInfo(acceptedLanguage);
-                return localDate.ToString(culture);
-                
-                throw new NotImplementedException();
+        return localDate.ToString(culture);
+        
+        throw new NotImplementedException();
+
     }
 
     public List<Student> UpdateStudentNameById(List<Student> students, int id, string name)
