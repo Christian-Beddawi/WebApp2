@@ -67,7 +67,7 @@ public class StudentHelper1 : IStudentHelper
     
 
 
-    public List<Student> DeleteStudentById(List<Student> students, int sId)
+    public List<Student> DeleteStudent(List<Student> students, int sId)
     {
         var studentToRemove = students.SingleOrDefault(r => r.id == sId);
         if (studentToRemove != null)
