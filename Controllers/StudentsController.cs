@@ -1,5 +1,4 @@
-using System.Globalization;
-using Microsoft.AspNetCore.Localization;
+
 using Microsoft.AspNetCore.Mvc;
 using WebApplication2.Abstraction;
 using WebApplication2.Model1;
@@ -62,4 +61,11 @@ public class StudentsController : ControllerBase
     {
         return _helper.UpdateStudentNameById(StudentList, sId, sName);
     }
+    
+    [HttpPost("uploadImage")]
+    public async Task<string> UploadImage([FromForm]IFormFile file)
+    {
+        return _helper.UploadImage(file);
+    }
+    
 }
