@@ -21,20 +21,9 @@ public class StudentHelper1 : IStudentHelper
     public string GetSpecificDateFormat(string acceptedLanguage)
     {
         DateTime localDate = DateTime.Now;
-        //Console.WriteLine(localDate);
-        string[] cultureNames = { "en-US", "es-ES", "fr-FR"};
-        //Console.WriteLine("Accepted Language : " + acceptedLanguage);
+        CultureInfo culture = new CultureInfo(acceptedLanguage);
+        return localDate.ToString(culture);
         
-        foreach (var cultureName in cultureNames)
-        {
-            if (cultureName == acceptedLanguage)
-            {
-                CultureInfo culture = new CultureInfo(cultureName);
-                //Console.WriteLine("{0}: {1}", cultureName, localDate.ToString(culture));
-                return localDate.ToString(culture);
-            }
-        }
-        return "Format Not Found";
         throw new NotImplementedException();
     }
 
