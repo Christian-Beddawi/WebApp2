@@ -22,7 +22,8 @@ public class StudentsController : ControllerBase
     {
         new Student(1,"Stud1","Stud1@gmail.com"),
         new Student(2,"Stud2","Stud2@gmail.com"),
-        new Student(3,"Stud3","Stud3@gmail.com")
+        new Student(3,"Stud3","Stud3@gmail.com"),
+        new Student(4,"Stud4","Stud4@gmail.com")
     };
 
     [HttpGet()]
@@ -61,5 +62,12 @@ public class StudentsController : ControllerBase
     public async Task<List<Student>> UpdateStudentNameById([FromRoute] int sId, string sName)
     {
         return _helper.UpdateStudentNameById(StudentList, sId, sName);
+    }
+
+    [HttpDelete()]
+    [Route("{id:int}")]
+    public async Task<List<Student>> DeleteStudentById([FromRoute] int id)
+    {
+        return _helper.DeleteStudentById(StudentList, id);
     }
 }
