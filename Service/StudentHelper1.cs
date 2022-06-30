@@ -1,4 +1,5 @@
 using System.Globalization;
+using WebApplication2.Exceptions;
 using WebApplication2.Model1;
 
 namespace WebApplication2.Abstraction;
@@ -8,33 +9,46 @@ public class StudentHelper1 : IStudentHelper
     
     public Student GetStudentById(List<Student> students, int sId)
     {
-        return students.First(obj => obj.id == sId);
+        foreach (Student s in students)
+        {
+            if (s.id == sId)
+            {
+                return s;
+            }
+        }
+        throw new StudentNotFoundException("No student with the given ID!");
+
         throw new NotImplementedException();
     }
     
     public Student GetStudentByName(List<Student> students, string sName )
     {
-        return students.First(obj => obj.name == sName);
+        //return students.First(obj => obj.name == sName);
+        foreach (Student s in students)
+        {
+            if (s.name == sName)
+            {
+                return s;
+            }
+        }
+        throw new StudentNotFoundException("No student with the given Name!");
         throw new NotImplementedException();
     }
     
     public string GetSpecificDateFormat(string acceptedLanguage)
     {
         DateTime localDate = DateTime.Now;
-        //Console.WriteLine(localDate);
-        string[] cultureNames = { "en-US", "es-ES", "fr-FR"};
-        //Console.WriteLine("Accepted Language : " + acceptedLanguage);
-        
-        foreach (var cultureName in cultureNames)
+        //string[] cultureNames = { "en-US", "es-ES", "fr-FR"};
+        try
         {
-            if (cultureName == acceptedLanguage)
-            {
-                CultureInfo culture = new CultureInfo(cultureName);
-                //Console.WriteLine("{0}: {1}", cultureName, localDate.ToString(culture));
-                return localDate.ToString(culture);
-            }
+            CultureInfo culture = new CultureInfo(acceptedLanguage);
+            return localDate.ToString(culture);
         }
-        return "Format Not Found";
+        catch (CultureNotFoundException ex)
+        {
+            return ex.Message;
+        }
+        
         throw new NotImplementedException();
     }
 
@@ -45,9 +59,10 @@ public class StudentHelper1 : IStudentHelper
             if (s.id == id)
             {
                 s.name = name;
+                return students;
             }
         }
-        return students;
+        throw new StudentNotFoundException("No student with the given ID!");
     }
     
     public string UploadImage(IFormFile file)
@@ -60,14 +75,20 @@ public class StudentHelper1 : IStudentHelper
             // combining GUID to create unique name before saving in wwwroot
             //string uniqueFileName = Guid.NewGuid().ToString() + "_" + fileName;
             // getting full path inside wwwroot/images
-            string ext=Path.GetExtension(fileName);
-            if (ext != ".png" && ext != ".jpeg" && ext != ".jpg" && ext != ".bmp")
-                return "Invalid File Type!!";
-            
-            var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/", fileName);
-            // copying file
-            file.CopyTo(new FileStream(imagePath, FileMode.Create));
-            return "File Uploaded Successfully!";
+            try
+            {
+                string ext=Path.GetExtension(fileName);
+                if (ext != ".png" && ext != ".jpeg" && ext != ".jpg" && ext != ".bmp")
+                    throw new InvalidFileTypeException("Unsupported file type!!");
+                var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/", fileName);
+                // copying file
+                file.CopyTo(new FileStream(imagePath, FileMode.Create));
+                return "File Uploaded Successfully!";
+            }
+            catch (InvalidFileTypeException e)
+            {
+                return e.Message;
+            }
         }
         catch (Exception ex)
         {
@@ -80,7 +101,8 @@ public class StudentHelper1 : IStudentHelper
         var studentToRemove = students.SingleOrDefault(r => r.id == sId);
         if (studentToRemove != null)
             students.Remove(studentToRemove);
-        
+        else
+            throw new StudentNotFoundException("No student with the given ID!");
         return students;
         /*foreach (var s in students)
         {
