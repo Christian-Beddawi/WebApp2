@@ -57,7 +57,7 @@ public class StudentsController : ControllerBase
         return Ok();
     }
     
-    [HttpPost("update")]
+    [HttpPost("updateStudent")]
     public async Task<List<Student>> UpdateStudentNameById([FromBody] Student s)
     {
         return _helper.UpdateStudentNameById(StudentList, s.id, s.name);
