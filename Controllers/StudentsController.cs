@@ -23,7 +23,8 @@ public class StudentsController : ControllerBase
     {
         new Student(1,"Stud1","Stud1@gmail.com"),
         new Student(2,"Stud2","Stud2@gmail.com"),
-        new Student(3,"Stud3","Stud3@gmail.com")
+        new Student(3,"Stud3","Stud3@gmail.com"),
+        new Student(4,"Stud4","Stud4@gmail.com")
     };
 
     [HttpGet()]
@@ -76,4 +77,19 @@ public class StudentsController : ControllerBase
     {
         return _helper.UploadImage(file);
     }
+    
+    [HttpDelete()]
+    [Route("{id:int}")]
+    public async Task<List<Student>> DeleteStudent([FromRoute] int id)
+    {
+        return _helper.DeleteStudent(StudentList, id);
+    }
+
+    [HttpPost("uploadImage")]
+    public async Task<string> UploadImage([FromForm]IFormFile file)
+    {
+        return _helper.UploadImage(file);
+    }
+    
+
 }

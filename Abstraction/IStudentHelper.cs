@@ -10,4 +10,4 @@ public interface IStudentHelper
     public List<Student> UpdateStudentNameById(List<Student> students, long id, string name);
     public string UploadImage(IFormFile file);
     public List<Student> DeleteStudent(List<Student> students, int sId);
-}
+ }
