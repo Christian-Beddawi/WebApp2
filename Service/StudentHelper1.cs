@@ -21,21 +21,11 @@ public class StudentHelper1 : IStudentHelper
     public string GetSpecificDateFormat(string acceptedLanguage)
     {
         DateTime localDate = DateTime.Now;
-        //Console.WriteLine(localDate);
-        string[] cultureNames = { "en-US", "es-ES", "fr-FR"};
-        //Console.WriteLine("Accepted Language : " + acceptedLanguage);
+        CultureInfo culture = new CultureInfo(acceptedLanguage);
+        return localDate.ToString(culture);
         
-        foreach (var cultureName in cultureNames)
-        {
-            if (cultureName == acceptedLanguage)
-            {
-                CultureInfo culture = new CultureInfo(cultureName);
-                //Console.WriteLine("{0}: {1}", cultureName, localDate.ToString(culture));
-                return localDate.ToString(culture);
-            }
-        }
-        return "Format Not Found";
         throw new NotImplementedException();
+
     }
 
     public List<Student> UpdateStudentNameById(List<Student> students, long id, string name)
@@ -57,8 +47,10 @@ public class StudentHelper1 : IStudentHelper
             // getting file original name
             string fileName = file.FileName;
                 
-            // combining GUID to create unique name before saving in wwwroot
-            //string uniqueFileName = Guid.NewGuid().ToString() + "_" + fileName;
+
+                // combining GUID to create unique name before saving in wwwroot
+                //string uniqueFileName = Guid.NewGuid().ToString() + "_" + fileName;
+
             // getting full path inside wwwroot/images
             string ext=Path.GetExtension(fileName);
             if (ext != ".png" && ext != ".jpeg" && ext != ".jpg" && ext != ".bmp")
@@ -75,6 +67,7 @@ public class StudentHelper1 : IStudentHelper
         }
     }
     
+
     public List<Student> DeleteStudent(List<Student> students, int sId)
     {
         var studentToRemove = students.SingleOrDefault(r => r.id == sId);
