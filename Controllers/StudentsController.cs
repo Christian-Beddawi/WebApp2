@@ -1,4 +1,6 @@
-
+using System.ComponentModel.DataAnnotations;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication2.Abstraction;
 using WebApplication2.Model1;
@@ -57,10 +59,23 @@ public class StudentsController : ControllerBase
         return Ok();
     }
     
-    [HttpPost("name/{sName},id/{sId}")]
-    public async Task<List<Student>> UpdateStudentNameById([FromRoute] int sId, string sName)
+    [HttpPost("update")]
+    public async Task<List<Student>> UpdateStudentNameById([FromBody] Student s)
     {
-        return _helper.UpdateStudentNameById(StudentList, sId, sName);
+        return _helper.UpdateStudentNameById(StudentList, s.id, s.name);
+    }
+    
+    [HttpDelete()]
+    [Route("{id:int}")]
+    public async Task<List<Student>> DeleteStudent([FromRoute] int id)
+    {
+        return _helper.DeleteStudent(StudentList, id);
+    }
+
+    [HttpPost("uploadImage")]
+    public async Task<string> UploadImage([FromForm]IFormFile file)
+    {
+        return _helper.UploadImage(file);
     }
     
     [HttpDelete()]
