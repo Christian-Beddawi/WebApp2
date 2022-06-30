@@ -1,8 +1,9 @@
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
+namespace WebApplication2.Filter;
 public class SwaggerFileOperationFilter : IOperationFilter  
-{  
+{ 
     public void Apply(OpenApiOperation operation, OperationFilterContext context)  
     {  
         var fileUploadMime = "multipart/form-data";  

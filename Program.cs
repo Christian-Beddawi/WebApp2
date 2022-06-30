@@ -1,5 +1,6 @@
 using Microsoft.OpenApi.Models;
 using WebApplication2.Abstraction;
+using WebApplication2.Filter;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseStaticFiles();
 
 app.UseAuthorization();
 

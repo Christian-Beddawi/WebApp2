@@ -28,7 +28,7 @@ public class StudentHelper1 : IStudentHelper
 
     }
 
-    public List<Student> UpdateStudentNameById(List<Student> students, int id, string name)
+    public List<Student> UpdateStudentNameById(List<Student> students, long id, string name)
     {
         foreach (Student s in students)
         {
@@ -47,8 +47,10 @@ public class StudentHelper1 : IStudentHelper
             // getting file original name
             string fileName = file.FileName;
                 
+
                 // combining GUID to create unique name before saving in wwwroot
                 //string uniqueFileName = Guid.NewGuid().ToString() + "_" + fileName;
+
             // getting full path inside wwwroot/images
             string ext=Path.GetExtension(fileName);
             if (ext != ".png" && ext != ".jpeg" && ext != ".jpg" && ext != ".bmp")
@@ -65,7 +67,6 @@ public class StudentHelper1 : IStudentHelper
         }
     }
     
-
 
     public List<Student> DeleteStudent(List<Student> students, int sId)
     {
