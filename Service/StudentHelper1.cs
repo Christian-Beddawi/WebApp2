@@ -38,7 +38,7 @@ public class StudentHelper1 : IStudentHelper
         throw new NotImplementedException();
     }
 
-    public List<Student> UpdateStudentNameById(List<Student> students, int id, string name)
+    public List<Student> UpdateStudentNameById(List<Student> students, long id, string name)
     {
         foreach (Student s in students)
         {

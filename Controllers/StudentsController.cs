@@ -57,11 +57,12 @@ public class StudentsController : ControllerBase
         return Ok();
     }
     
-    [HttpPost("name/{sName},id/{sId}")]
-    public async Task<List<Student>> UpdateStudentNameById([FromRoute] int sId, string sName)
+    [HttpPost("update")]
+    public async Task<List<Student>> UpdateStudentNameById([FromBody] Student s)
     {
-        return _helper.UpdateStudentNameById(StudentList, sId, sName);
+        return _helper.UpdateStudentNameById(StudentList, s.id, s.name);
     }
+    
     [HttpDelete()]
     [Route("{id:int}")]
     public async Task<List<Student>> DeleteStudent([FromRoute] int id)
